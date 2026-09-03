@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura do Bardo - Caverna dos Goblins</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a0e0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #game-container {
+            position: relative;
+            width: 800px;
+            height: 450px;
+            border: 3px solid #8b7355;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.3);
+            background: #2a1a10;
+            overflow: hidden;
+        }
+
+        #menu {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, #1a0e0a 0%, #2a1a10 40%, #1a0e0a 100%);
+            z-index: 10;
+            transition: opacity 0.5s;
+        }
+
+        #menu.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #menu h1 {
+            color: #e8c87a;
+            font-size: 48px;
+            text-shadow: 3px 3px 6px #000, 0 0 20px rgba(232,200,122,0.4);
+            margin-bottom: 10px;
+            letter-spacing: 4px;
+            text-align: center;
+        }
+
+        #menu .subtitle {
+            color: #a08060;
+            font-size: 16px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .menu-btn {
+            background: linear-gradient(180deg, #8b6914, #6b4e10);
+            color: #f0e0b0;
+            border: 2px solid #c8a050;
+            border-radius: 8px;
+            padding: 14px 50px;
+            font-size: 22px;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+            margin: 8px;
+            letter-spacing: 2px;
+            transition: all 0.2s;
+            min-width: 280px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+
+        .menu-btn:hover {
+            background: linear-gradient(180deg, #a08020, #8b6914);
+            transform: scale(1.03);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .menu-btn:active {
+            transform: scale(0.97);
+        }
+
+        #settings-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(180deg, #3a2a1a, #2a1a0a);
+            border: 3px solid #8b7355;
+            border-radius: 12px;
+            padding: 30px 40px;
+            z-index: 20;
+            min-width: 400px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,0.4);
+            display: none;
+        }
+
+        #settings-modal.visible {
+            display: block;
+            animation: modalIn 0.3s ease-out;
+        }
+
+        @keyframes modalIn {
+            from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        #settings-modal h2 {
+            color: #e8c87a;
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .setting-row {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .setting-row label {
+            color: #d0b890;
+            font-size: 18px;
+            min-width: 100px;
+        }
+
+        .setting-row select,
+        .setting-row input[type="range"] {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 2px solid #8b7355;
+            background: #1a0e0a;
+            color: #f0e0b0;
+            font-size: 16px;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+        }
+
+        .setting-row select:focus {
+            outline: none;
+            border-color: #c8a050;
+        }
+
+        .setting-row input[type="range"] {
+            -webkit-appearance: none;
+            height: 8px;
+            border: none;
+            background: #4a3a2a;
+            border-radius: 4px;
+        }
+
+        .setting-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #c8a050;
+            cursor: pointer;
+            border: 2px solid #8b6914;
+        }
+
+        .volume-value {
+            color: #e8c87a;
+            font-size: 16px;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        .modal-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .modal-btn {
+            background: linear-gradient(180deg, #8b6914, #6b4e10);
+            color: #f0e0b0;
+            border: 2px solid #c8a050;
+            border-radius: 6px;
+            padding: 10px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .modal-btn:hover {
+            background: linear-gradient(180deg, #a08020, #8b6914);
+            transform: scale(1.05);
+        }
+
+        #gameCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            display: none;
+        }
+
+        #gameCanvas.visible {
+            display: block;
+        }
+
+        #hud {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            display: none;
+            pointer-events: none;
+        }
+
+        #hud.visible {
+            display: block;
+        }
+
+        #hud .sequence-indicator {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .seq-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4a3a2a;
+            border: 2px solid #8b7355;
+            transition: all 0.3s;
+        }
+
+        .seq-dot.active {
+            background: #e8c87a;
+            border-color: #f0e0b0;
+            box-shadow: 0 0 15px rgba(232,200,122,0.8);
+        }
+
+        .seq-dot.complete {
+            background: #4a8b3a;
+            border-color: #6ab84a;
+        }
+
+        .seq-dot.failed {
+            background: #8b3a3a;
+            border-color: #c84a4a;
+        }
+
+        #victory-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(0,0,0,0.7);
+            z-index: 25;
+        }
+
+        #victory-overlay.visible {
+            display: flex;
+        }
+
+        #victory-overlay h2 {
+            color: #e8c87a;
+            font-size: 42px;
+            text-shadow: 2px 2px 8px #000, 0 0 30px rgba(232,200,122,0.6);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        #victory-overlay p {
+            color: #d0b890;
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .toast {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 18;
+            font-size: 36px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: toastAnim 0.8s ease-out forwards;
+            text-shadow: 2px 2px 10px #000;
+        }
+
+        @keyframes toastAnim {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+            100% { opacity: 0; transform: translate(-50%, -60%) scale(1); }
+        }
+
+        .toast.success { color: #6ab84a; }
+        .toast.fail { color: #c84a4a; }
+        .toast.miss { color: #d0a030; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <!-- Canvas do jogo -->
+    <canvas id="gameCanvas" width="800" height="450"></canvas>
+
+    <!-- Menu principal -->
+    <div id="menu">
+        <h1>🎵 Aventura do Bardo</h1>
+        <div class="subtitle">Caverna dos Goblins</div>
+        <button class="menu-btn" id="btn-start">▶ Iniciar Jornada</button>
+        <button class="menu-btn" id="btn-settings">⚙️ Configurações</button>
+    </div>
+
+    <!-- Modal de configurações -->
+    <div id="settings-modal">
+        <h2>⚙️ Configurações</h2>
+        <div class="setting-row">
+            <label id="lang-label">Idioma / Language</label>
+            <select id="lang-select">
+                <option value="pt">Português</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        <div class="setting-row">
+            <label id="vol-label">Volume</label>
+            <input type="range" id="vol-slider" min="0" max="100" value="70">
+            <span class="volume-value" id="vol-value">70%</span>
+        </div>
+        <div class="modal-btns">
+            <button class="modal-btn" id="btn-modal-close">✔ OK</button>
+        </div>
+    </div>
+
+    <!-- HUD de sequências -->
+    <div id="hud">
+        <div class="sequence-indicator" id="seq-indicator">
+            <div class="seq-dot" data-index="0"></div>
+            <div class="seq-dot" data-index="1"></div>
+            <div class="seq-dot" data-index="2"></div>
+        </div>
+    </div>
+
+    <!-- Overlay de vitória -->
+    <div id="victory-overlay">
+        <h2 id="victory-title">🏆 Vitória!</h2>
+        <p id="victory-text">O goblin foi derrotado! Fim da primeira fase.</p>
+        <button class="menu-btn" id="btn-restart">🔄 Jogar Novamente</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ============ CONFIGURAÇÕES GLOBAIS ============
+        const config = {
+            language: 'pt',
+            volume: 0.7,
+        };
+
+        // Textos traduzidos
+        const i18n = {
+            pt: {
+                menuTitle: '🎵 Aventura do Bardo',
+                menuSubtitle: 'Caverna dos Goblins',
+                btnStart: '▶ Iniciar Jornada',
+                btnSettings: '⚙️ Configurações',
+                settingsTitle: '⚙️ Configurações',
+                langLabel: 'Idioma / Language',
+                volLabel: 'Volume',
+                btnClose: '✔ OK',
+                victoryTitle: '🏆 Vitória!',
+                victoryText: 'O goblin foi derrotado! Fim da primeira fase.',
+                btnRestart: '🔄 Jogar Novamente',
+                success: 'ACERTO!',
+                fail: 'ERRO!',
+                miss: 'PERDEU!',
+                sequence: 'Sequência',
+                of: 'de',
+                combo: 'Combo',
+            },
+            en: {
+                menuTitle: '🎵 Bard Adventure',
+                menuSubtitle: 'Goblin Cave',
+                btnStart: '▶ Start Journey',
+                btnSettings: '⚙️ Settings',
+                settingsTitle: '⚙️ Settings',
+                langLabel: 'Language / Idioma',
+                volLabel: 'Volume',
+                btnClose: '✔ OK',
+                victoryTitle: '🏆 Victory!',
+                victoryText: 'The goblin has been defeated! End of first stage.',
+                btnRestart: '🔄 Play Again',
+                success: 'HIT!',
+                fail: 'MISS!',
+                miss: 'TOO LATE!',
+                sequence: 'Sequence',
+                of: 'of',
+                combo: 'Combo',
+            }
+        };
+
+        function t(key) {
+            return i18n[config.language][key] || i18n.pt[key] || key;
+        }
+
+        // ============ ELEMENTOS DOM ============
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const menuDiv = document.getElementById('menu');
+        const settingsModal = document.getElementById('settings-modal');
+        const hudDiv = document.getElementById('hud');
+        const victoryOverlay = document.getElementById('victory-overlay');
+        const btnStart = document.getElementById('btn-start');
+        const btnSettings = document.getElementById('btn-settings');
+        const btnModalClose = document.getElementById('btn-modal-close');
+        const btnRestart = document.getElementById('btn-restart');
+        const langSelect = document.getElementById('lang-select');
+        const volSlider = document.getElementById('vol-slider');
+        const volValue = document.getElementById('vol-value');
+        const seqIndicator = document.getElementById('seq-indicator');
+        const seqDots = seqIndicator.querySelectorAll('.seq-dot');
+
+        // ============ ÁUDIO ============
+        let audioCtx = null;
+        let masterGain = null;
+
+        function initAudio() {
+            if (audioCtx) return;
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                masterGain = audioCtx.createGain();
+                masterGain.gain.value = config.volume;
+                masterGain.connect(audioCtx.destination);
+            } catch (e) {
+                console.warn('Web Audio API não suportada');
+            }
+        }
+
+        function setVolume(v) {
+            config.volume = v;
+            if (masterGain) {
+                masterGain.gain.setValueAtTime(v, audioCtx.currentTime);
+            }
+        }
+
+        function playTone(freq, duration, type = 'sine', vol = 0.3) {
+            if (!audioCtx || !masterGain) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(masterGain);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function playHitSound() {
+            playTone(880, 0.15, 'sine', 0.25);
+            setTimeout(() => playTone(1100, 0.1, 'sine', 0.2), 80);
+        }
+
+        function playMissSound() {
+            playTone(200, 0.3, 'sawtooth', 0.2);
+        }
+
+        function playTickSound() {
+            playTone(600, 0.08, 'square', 0.15);
+        }
+
+        function playVictorySound() {
+            playTone(523, 0.2, 'sine', 0.3);
+            setTimeout(() => playTone(659, 0.2, 'sine', 0.3), 150);
+            setTimeout(() => playTone(784, 0.4, 'sine', 0.35), 300);
+        }
+
+        // ============ ESTADO DO JOGO ============
+        const GameState = {
+            MENU: 'menu',
+            WALKING: 'walking',
+            COMBAT: 'combat',
+            VICTORY: 'victory',
+        };
+
+        let currentState = GameState.MENU;
+        let animationId = null;
+        let lastTime = 0;
+        let walkProgress = 0; // 0 a 1
+        const WALK_DURATION = 3.0; // segundos de caminhada
+
+        // Combate
+        let combatStartTime = 0;
+        let combatElapsed = 0;
+        let currentSequence = 0;
+        let sequenceState = 'waiting'; // waiting, active, complete
+        let sequenceNotes = [];
+        let activeNotes = [];
+        let notesSpawned = [];
+        let sequenceStartTime = 0;
+        let sequenceCompleteCount = 0;
+        let feedbackToasts = [];
+        let lastHitTime = 0;
+        let comboCount = 0;
+
+        // Constantes do ritmo
+        const BPM = 120;
+        const BEAT_DURATION = 60 / BPM; // 0.5s
+        const TRAVEL_TIME = 2.0; // tempo para nota viajar da direita até a zona
+        const ZONE_X = 150;
+        const ZONE_WINDOW = 35; // pixels de tolerância
+        const SCREEN_WIDTH = 800;
+        const SCREEN_HEIGHT = 450;
+
+        // Tipos de nota
+        const NOTE_TYPES = {
+            SEMINIMA: 'semínima',
+            COLCHEIA: 'colcheia',
+            MINIMA: 'mínima',
+        };
+
+        // Definição das 3 sequências
+        const sequences = [
+            // Sequência 1: Semínima simples
+            {
+                name: 'Semínima',
+                notes: [
+                    { beat: 0, type: NOTE_TYPES.SEMINIMA },
+                ],
+                totalBeats: 1,
+            },
+            // Sequência 2: Colcheia colcheia
+            {
+                name: 'Colcheias',
+                notes: [
+                    { beat: 0, type: NOTE_TYPES.COLCHEIA },
+                    { beat: 0.5, type: NOTE_TYPES.COLCHEIA },
+                ],
+                totalBeats: 1.5,
+            },
+            // Sequência 3: Mínima (nota longa)
+            {
+                name: 'Mínima',
+                notes: [
+                    { beat: 0, type: NOTE_TYPES.MINIMA, duration: 2 },
+                ],
+                totalBeats: 2,
+            },
+        ];
+
+        // ============ DESENHO ============
+        function drawCaveBackground(offsetX = 0) {
+            // Fundo
+            const grad = ctx.createLinearGradient(0, 0, 0, SCREEN_HEIGHT);
+            grad.addColorStop(0, '#1a0e0a');
+            grad.addColorStop(0.5, '#2a1a10');
+            grad.addColorStop(1, '#1a0e0a');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+            // Estalactites no teto
+            ctx.fillStyle = '#3a2a1a';
+            for (let i = 0; i < 12; i++) {
+                const x = (i * 80 + offsetX * 0.3) % 880 - 40;
+                const h = 40 + (i % 4) * 20;
+                ctx.beginPath();
+                ctx.moveTo(x - 20, 0);
+                ctx.lineTo(x, h);
+                ctx.lineTo(x + 20, 0);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Estalagmites no chão
+            ctx.fillStyle = '#3a2a1a';
+            for (let i = 0; i < 10; i++) {
+                const x = (i * 100 + offsetX * 0.5) % 900 - 50;
+                const h = 30 + (i % 3) * 15;
+                ctx.beginPath();
+                ctx.moveTo(x - 15, SCREEN_HEIGHT);
+                ctx.lineTo(x, SCREEN_HEIGHT - h);
+                ctx.lineTo(x + 15, SCREEN_HEIGHT);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Chão
+            ctx.fillStyle = '#4a3a2a';
+            ctx.fillRect(0, SCREEN_HEIGHT - 30, SCREEN_WIDTH, 30);
+            ctx.fillStyle = '#5a4a3a';
+            ctx.fillRect(0, SCREEN_HEIGHT - 30, SCREEN_WIDTH, 5);
+
+            // Pedras no chão
+            ctx.fillStyle = '#3a2a1a';
+            for (let i = 0; i < 20; i++) {
+                const x = (i * 47 + offsetX * 0.8) % SCREEN_WIDTH;
+                const y = SCREEN_HEIGHT - 25 + (i % 3) * 5;
+                ctx.beginPath();
+                ctx.arc(x, y, 5 + (i % 4), 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Cristais brilhantes
+            ctx.fillStyle = '#6ab8d0';
+            for (let i = 0; i < 5; i++) {
+                const x = (i * 180 + offsetX * 0.1) % SCREEN_WIDTH;
+                const y = 80 + (i % 3) * 50;
+                ctx.save();
+                ctx.globalAlpha = 0.3 + Math.sin(Date.now() / 1000 + i) * 0.1;
+                ctx.beginPath();
+                ctx.moveTo(x, y - 12);
+                ctx.lineTo(x + 6, y);
+                ctx.lineTo(x, y + 12);
+                ctx.lineTo(x - 6, y);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function drawBard(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Sombra
+            ctx.fillStyle = 'rgba(0,0,0,0.4)';
+            ctx.beginPath();
+            ctx.ellipse(0, 45, 25, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Pernas
+            ctx.fillStyle = '#5a3a2a';
+            ctx.fillRect(-12, 25, 8, 18);
+            ctx.fillRect(4, 25, 8, 18);
+
+            // Botas
+            ctx.fillStyle = '#3a1a0a';
+            ctx.fillRect(-14, 38, 12, 8);
+            ctx.fillRect(2, 38, 12, 8);
+
+            // Corpo (túnica)
+            ctx.fillStyle = '#7a5a3a';
+            ctx.beginPath();
+            ctx.moveTo(-15, -20);
+            ctx.quadraticCurveTo(0, -35, 15, -20);
+            ctx.lineTo(15, 25);
+            ctx.lineTo(-15, 25);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#5a3a2a';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Cinto
+            ctx.fillStyle = '#c8a050';
+            ctx.fillRect(-15, 8, 30, 4);
+            ctx.fillStyle = '#e8c87a';
+            ctx.fillRect(-2, 6, 4, 8);
+
+            // Braços
+            ctx.fillStyle = '#7a5a3a';
+            ctx.fillRect(-20, -12, 8, 20);
+            ctx.fillRect(12, -12, 8, 20);
+
+            // Mãos
+            ctx.fillStyle = '#d0b890';
+            ctx.beginPath();
+            ctx.arc(-16, 10, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(16, 10, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Alaúde (instrumento)
+            ctx.fillStyle = '#8b6914';
+            ctx.beginPath();
+            ctx.ellipse(20, -5, 14, 10, -0.3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#6b4e10';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            // Cordas
+            ctx.strokeStyle = '#d0b890';
+            ctx.lineWidth = 0.8;
+            for (let i = -3; i <= 3; i++) {
+                ctx.beginPath();
+                ctx.moveTo(15 + i, -12);
+                ctx.lineTo(25 + i, 2);
+                ctx.stroke();
+            }
+            // Braço do alaúde
+            ctx.fillStyle = '#6b4e10';
+            ctx.fillRect(8, -14, 4, 20);
+            ctx.fillRect(6, -18, 8, 5);
+
+            // Cabeça
+            ctx.fillStyle = '#d0b890';
+            ctx.beginPath();
+            ctx.arc(0, -30, 16, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Cabelo
+            ctx.fillStyle = '#8b5a2a';
+            ctx.beginPath();
+            ctx.arc(0, -34, 16, Math.PI * 0.9, Math.PI * 2.1);
+            ctx.fill();
+
+            // Olhos
+            ctx.fillStyle = '#1a0e0a';
+            ctx.beginPath();
+            ctx.arc(-5, -31, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(5, -31, 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Boca (sorriso)
+            ctx.strokeStyle = '#8b5a3a';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.arc(0, -25, 5, 0.2, Math.PI - 0.2);
+            ctx.stroke();
+
+            // Chapéu de bardo (com pena)
+            ctx.fillStyle = '#5a3a2a';
+            ctx.beginPath();
+            ctx.ellipse(0, -38, 22, 6, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(-18, -36);
+            ctx.quadraticCurveTo(0, -60, 18, -36);
+            ctx.closePath();
+            ctx.fill();
+            // Pena
+            ctx.fillStyle = '#c8a050';
+            ctx.beginPath();
+            ctx.moveTo(8, -52);
+            ctx.quadraticCurveTo(20, -65, 28, -55);
+            ctx.quadraticCurveTo(18, -55, 8, -52);
+            ctx.fill();
+            ctx.strokeStyle = '#8b6914';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawGoblin(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Sombra
+            ctx.fillStyle = 'rgba(0,0,0,0.4)';
+            ctx.beginPath();
+            ctx.ellipse(0, 50, 28, 9, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Pernas
+            ctx.fillStyle = '#5a7a3a';
+            ctx.fillRect(-14, 30, 10, 18);
+            ctx.fillRect(4, 30, 10, 18);
+
+            // Pés
+            ctx.fillStyle = '#3a5a2a';
+            ctx.fillRect(-16, 44, 14, 7);
+            ctx.fillRect(2, 44, 14, 7);
+
+            // Corpo
+            ctx.fillStyle = '#6a8a3a';
+            ctx.beginPath();
+            ctx.moveTo(-18, -15);
+            ctx.quadraticCurveTo(0, -30, 18, -15);
+            ctx.lineTo(18, 30);
+            ctx.lineTo(-18, 30);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#4a6a2a';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Braços
+            ctx.fillStyle = '#6a8a3a';
+            ctx.fillRect(-25, -8, 10, 22);
+            ctx.fillRect(15, -8, 10, 22);
+
+            // Mãos (garras)
+            ctx.fillStyle = '#4a6a2a';
+            ctx.beginPath();
+            ctx.arc(-20, 16, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(20, 16, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Clava (na mão direita)
+            ctx.fillStyle = '#5a3a2a';
+            ctx.fillRect(15, -25, 6, 35);
+            ctx.fillStyle = '#4a2a1a';
+            ctx.beginPath();
+            ctx.arc(18, -28, 10, 0, Math.PI * 2);
+            ctx.fill();
+            // Espinhos na clava
+            ctx.fillStyle = '#3a1a0a';
+            for (let i = 0; i < 6; i++) {
+                const angle = (i / 6) * Math.PI * 2;
+                ctx.beginPath();
+                ctx.moveTo(18 + Math.cos(angle) * 10, -28 + Math.sin(angle) * 10);
+                ctx.lineTo(18 + Math.cos(angle) * 16, -28 + Math.sin(angle) * 16);
+                ctx.lineTo(18 + Math.cos(angle + 0.4) * 10, -28 + Math.sin(angle + 0.4) * 10);
+                ctx.fill();
+            }
+
+            // Cabeça
+            ctx.fillStyle = '#6a8a3a';
+            ctx.beginPath();
+            ctx.arc(0, -35, 18, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Orelhas pontudas
+            ctx.fillStyle = '#6a8a3a';
+            ctx.beginPath();
+            ctx.moveTo(-14, -40);
+            ctx.lineTo(-28, -55);
+            ctx.lineTo(-10, -45);
+            ctx.closePath();
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(14, -40);
+            ctx.lineTo(28, -55);
+            ctx.lineTo(10, -45);
+            ctx.closePath();
+            ctx.fill();
+
+            // Olhos (vermelhos)
+            ctx.fillStyle = '#c83030';
+            ctx.beginPath();
+            ctx.arc(-6, -36, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(6, -36, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#1a0e0a';
+            ctx.beginPath();
+            ctx.arc(-6, -36, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(6, -36, 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Boca (dentes afiados)
+            ctx.fillStyle = '#3a5a2a';
+            ctx.beginPath();
+            ctx.moveTo(-8, -27);
+            ctx.lineTo(-4, -22);
+            ctx.lineTo(0, -27);
+            ctx.lineTo(4, -22);
+            ctx.lineTo(8, -27);
+            ctx.lineTo(6, -25);
+            ctx.lineTo(-6, -25);
+            ctx.closePath();
+            ctx.fill();
+
+            // Rugas
+            ctx.strokeStyle = '#4a6a2a';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(-12, -42);
+            ctx.quadraticCurveTo(0, -45, 12, -42);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawNoteSymbol(noteType, x, y, scale = 1.0) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.scale(scale, scale);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#1a0e0a';
+            ctx.fillStyle = '#1a0e0a';
+
+            if (noteType === NOTE_TYPES.SEMINIMA) {
+                // Círculo preenchido + haste
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 10, 7, -0.3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillRect(8, -25, 3, 25);
+            } else if (noteType === NOTE_TYPES.COLCHEIA) {
+                // Duas colcheias conectadas
+                ctx.beginPath();
+                ctx.ellipse(-5, 0, 8, 6, -0.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(12, -3, 8, 6, -0.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillRect(2, -22, 3, 22);
+                ctx.fillRect(19, -25, 3, 22);
+                // Barra conectando
+                ctx.fillRect(2, -25, 20, 5);
+            } else if (noteType === NOTE_TYPES.MINIMA) {
+                // Círculo vazio + haste (mínima)
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 10, 7, -0.3, 0, Math.PI * 2);
+                ctx.fillStyle = '#f0e0b0';
+                ctx.fill();
+                ctx.strokeStyle = '#1a0e0a';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                ctx.fillStyle = '#1a0e0a';
+                ctx.fillRect(8, -25, 3, 25);
+            }
+
+            ctx.restore();
+        }
+
+        function drawZoneLine() {
+            ctx.save();
+            ctx.strokeStyle = 'rgba(232,200,122,0.8)';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([10, 8]);
+            ctx.beginPath();
+            ctx.moveTo(ZONE_X, 60);
+            ctx.lineTo(ZONE_X, SCREEN_HEIGHT - 40);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Zona de acerto (retângulo sutil)
+            ctx.fillStyle = 'rgba(232,200,122,0.1)';
+            ctx.fillRect(ZONE_X - ZONE_WINDOW, 60, ZONE_WINDOW * 2, SCREEN_HEIGHT - 100);
+            ctx.strokeStyle = 'rgba(232,200,122,0.5)';
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(ZONE_X - ZONE_WINDOW, 60, ZONE_WINDOW * 2, SCREEN_HEIGHT - 100);
+
+            // Rótulo
+            ctx.fillStyle = 'rgba(232,200,122,0.9)';
+            ctx.font = '14px Georgia';
+            ctx.textAlign = 'center';
+            ctx.fillText('▼', ZONE_X, 50);
+
+            ctx.restore();
+        }
+
+        function drawCombatUI() {
+            // Linha da zona
+            drawZoneLine();
+
+            // Notas ativas
+            for (const note of activeNotes) {
+                const noteX = note.currentX;
+                const noteY = 180 + note.typeIndex * 40;
+                drawNoteSymbol(note.type, noteX, noteY, 1.2);
+
+                // Brilho se estiver na zona
+                if (Math.abs(noteX - ZONE_X) < ZONE_WINDOW) {
+                    ctx.fillStyle = 'rgba(232,200,122,0.3)';
+                    ctx.beginPath();
+                    ctx.arc(noteX, noteY, 25, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // Feedback de combo
+            if (comboCount > 1) {
+                ctx.fillStyle = '#e8c87a';
+                ctx.font = 'bold 20px Georgia';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${t('combo')}: ${comboCount}x`, SCREEN_WIDTH / 2, 30);
+            }
+        }
+
+        function drawWalkScene(progress) {
+            const bgOffset = progress * 200;
+            drawCaveBackground(bgOffset);
+
+            // Bardo andando (da esquerda para o centro)
+            const bardX = -50 + progress * 250;
+            const bardY = SCREEN_HEIGHT - 70;
+            drawBard(bardX, bardY);
+
+            // Goblin parado à direita
+            const goblinX = 650;
+            const goblinY = SCREEN_HEIGHT - 70;
+            drawGoblin(goblinX, goblinY);
+
+            // Texto de aproximação
+            if (progress < 0.8) {
+                ctx.fillStyle = '#d0b890';
+                ctx.font = '18px Georgia';
+                ctx.textAlign = 'center';
+                ctx.fillText('Aproximando-se...', SCREEN_WIDTH / 2, 50);
+            }
+        }
+
+        // ============ LÓGICA DE COMBATE ============
+        function startCombat() {
+            currentSequence = 0;
+            sequenceCompleteCount = 0;
+            comboCount = 0;
+            combatStartTime = performance.now() / 1000;
+            startSequence(0);
+            updateSequenceHUD();
+        }
+
+        function startSequence(index) {
+            currentSequence = index;
+            sequenceState = 'waiting';
+            sequenceNotes = sequences[index].notes;
+            activeNotes = [];
+            notesSpawned = [];
+            sequenceStartTime = performance.now() / 1000;
+            // Tempo de preparação: 1.5 segundos
+            sequenceState = 'preparing';
+            setTimeout(() => {
+                if (currentState === GameState.COMBAT && sequenceState === 'preparing') {
+                    sequenceState = 'active';
+                    sequenceStartTime = performance.now() / 1000;
+                    // Toca som de contagem
+                    playTickSound();
+                }
+            }, 1200);
+            updateSequenceHUD();
+        }
+
+        function updateSequenceHUD() {
+            for (let i = 0; i < seqDots.length; i++) {
+                const dot = seqDots[i];
+                dot.classList.remove('active', 'complete', 'failed');
+                if (i < currentSequence) {
+                    dot.classList.add('complete');
+                } else if (i === currentSequence) {
+                    dot.classList.add('active');
+                }
+            }
+        }
+
+        function handleNoteHit(note) {
+            playHitSound();
+            comboCount++;
+            note.hit = true;
+            activeNotes = activeNotes.filter(n => n !== note);
+            showToast(t('success'), 'success');
+            checkSequenceComplete();
+        }
+
+        function handleNoteMiss(note) {
+            playMissSound();
+            comboCount = 0;
+            note.missed = true;
+            activeNotes = activeNotes.filter(n => n !== note);
+            showToast(t('fail'), 'fail');
+            // Reinicia a sequência atual
+            restartSequence();
+        }
+
+        function handleNotePassed(note) {
+            playMissSound();
+            comboCount = 0;
+            note.missed = true;
+            activeNotes = activeNotes.filter(n => n !== note);
+            showToast(t('miss'), 'miss');
+            // Reinicia a sequência atual
+            restartSequence();
+        }
+
+        function restartSequence() {
+            // Pequeno atraso antes de reiniciar
+            sequenceState = 'failed';
+            setTimeout(() => {
+                if (currentState === GameState.COMBAT) {
+                    startSequence(currentSequence);
+                }
+            }, 800);
+        }
+
+        function checkSequenceComplete() {
+            // Verifica se todas as notas da sequência foram acertadas
+            const allHit = sequenceNotes.every(noteDef => {
+                return activeNotes.some(n => n.sequenceIndex === noteDef.beat) || 
+                       notesSpawned.some(n => n.hit);
+            });
+            
+            // Melhor: verificar se todas as notas foram spawnadas e acertadas
+            const totalNotes = sequenceNotes.length;
+            const hitNotes = notesSpawned.filter(n => n.hit).length;
+            
+            if (hitNotes >= totalNotes && activeNotes.length === 0) {
+                // Sequência completa!
+                sequenceCompleteCount++;
+                comboCount = 0;
+                showToast(`★ ${t('sequence')} ${currentSequence + 1} ${t('of')} 3 ★`, 'success');
+                
+                // Avança para a próxima sequência
+                setTimeout(() => {
+                    if (currentState === GameState.COMBAT) {
+                        if (sequenceCompleteCount >= 3) {
+                            // Venceu o combate!
+                            onVictory();
+                        } else {
+                            startSequence(currentSequence + 1);
+                        }
+                    }
+                }, 1000);
+            }
+        }
+
+        function onVictory() {
+            currentState = GameState.VICTORY;
+            playVictorySound();
+            victoryOverlay.classList.add('visible');
+        }
+
+        function showToast(text, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = text;
+            document.getElementById('game-container').appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 900);
+        }
+
+        function spawnNotes(elapsed) {
+            // Spawna notas que ainda não apareceram
+            for (let i = 0; i < sequenceNotes.length; i++) {
+                const noteDef = sequenceNotes[i];
+                const alreadySpawned = notesSpawned.some(n => n.sequenceIndex === i);
+                if (!alreadySpawned) {
+                    const targetTime = noteDef.beat * BEAT_DURATION;
+                    const spawnTime = targetTime - TRAVEL_TIME;
+                    if (elapsed >= spawnTime) {
+                        notesSpawned.push({
+                            sequenceIndex: i,
+                            type: noteDef.type,
+                            beat: noteDef.beat,
+                            targetTime: targetTime,
+                            spawnTime: spawnTime,
+                            hit: false,
+                            missed: false,
+                            currentX: SCREEN_WIDTH,
+                        });
+                    }
+                }
+            }
+
+            // Atualiza posições das notas ativas e verifica hit/miss
+            activeNotes = [];
+            for (const note of notesSpawned) {
+                if (note.hit || note.missed) continue;
+                
+                const noteElapsed = elapsed - note.spawnTime;
+                const noteX = SCREEN_WIDTH - noteElapsed * (SCREEN_WIDTH - ZONE_X) / TRAVEL_TIME;
+                note.currentX = noteX;
+                
+                if (noteX < ZONE_X - ZONE_WINDOW) {
+                    // Passou da zona sem ser acertado
+                    handleNotePassed(note);
+                } else if (noteX > ZONE_X + ZONE_WINDOW) {
+                    // Ainda não chegou na zona
+                    activeNotes.push(note);
+                } else {
+                    // Está na zona, aguardando input
+                    activeNotes.push(note);
+                }
+            }
+        }
+
+        function handlePlayerInput() {
+            if (currentState !== GameState.COMBAT || sequenceState !== 'active') return;
+            
+            // Encontra a nota mais próxima da zona que não foi acertada
+            let closestNote = null;
+            let closestDist = Infinity;
+            
+            for (const note of notesSpawned) {
+                if (note.hit || note.missed) continue;
+                const noteX = note.currentX;
+                const dist = Math.abs(noteX - ZONE_X);
+                if (dist < ZONE_WINDOW && dist < closestDist) {
+                    closestDist = dist;
+                    closestNote = note;
+                }
+            }
+            
+            if (closestNote) {
+                handleNoteHit(closestNote);
+            } else {
+                // Errou - sem nota na zona
+                playMissSound();
+                comboCount = 0;
+                showToast(t('fail'), 'fail');
+                restartSequence();
+            }
+        }
+
+        // ============ LOOP PRINCIPAL ============
+        function gameLoop(timestamp) {
+            const now = timestamp / 1000;
+            const deltaTime = lastTime ? now - lastTime : 0;
+            lastTime = now;
+
+            // Limpa o canvas
+            ctx.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+            if (currentState === GameState.WALKING) {
+                walkProgress += deltaTime / WALK_DURATION;
+                if (walkProgress >= 1) {
+                    walkProgress = 1;
+                    drawWalkScene(walkProgress);
+                    // Transição para combate após breve pausa
+                    setTimeout(() => {
+                        currentState = GameState.COMBAT;
+                        hudDiv.classList.add('visible');
+                        startCombat();
+                    }, 500);
+                } else {
+                    drawWalkScene(walkProgress);
+                }
+            } else if (currentState === GameState.COMBAT) {
+                drawCaveBackground(100);
+                
+                // Bardo e Goblin
+                drawBard(100, SCREEN_HEIGHT - 70);
+                drawGoblin(650, SCREEN_HEIGHT - 70);
+                
+                // UI de combate
+                if (sequenceState === 'active' || sequenceState === 'preparing' || sequenceState === 'failed') {
+                    const combatNow = performance.now() / 1000;
+                    const elapsed = combatNow - sequenceStartTime;
+                    
+                    if (sequenceState === 'active') {
+                        spawnNotes(elapsed);
+                    }
+                    
+                    drawCombatUI();
+                    
+                    // Mostra o nome do padrão
+                    ctx.fillStyle = '#e8c87a';
+                    ctx.font = 'bold 22px Georgia';
+                    ctx.textAlign = 'center';
+                    const seqName = sequences[currentSequence].name;
+                    ctx.fillText(`${t('sequence')} ${currentSequence + 1}/3: ${seqName}`, SCREEN_WIDTH / 2, 45);
+                    
+                    if (sequenceState === 'preparing') {
+                        ctx.fillStyle = '#d0b890';
+                        ctx.font = '20px Georgia';
+                        ctx.fillText('Prepare-se...', SCREEN_WIDTH / 2, 100);
+                    }
+                }
+            } else if (currentState === GameState.VICTORY) {
+                drawCaveBackground(100);
+                drawBard(100, SCREEN_HEIGHT - 70);
+                // Goblin derrotado (caído)
+                ctx.save();
+                ctx.translate(650, SCREEN_HEIGHT - 20);
+                ctx.rotate(-Math.PI / 6);
+                drawGoblin(0, 0);
+                ctx.restore();
+                ctx.fillStyle = 'rgba(0,0,0,0.4)';
+                ctx.beginPath();
+                ctx.ellipse(650, SCREEN_HEIGHT - 15, 30, 8, 0, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // ============ INICIALIZAÇÃO ============
+        function updateUITexts() {
+            document.querySelector('#menu h1').textContent = t('menuTitle');
+            document.querySelector('#menu .subtitle').textContent = t('menuSubtitle');
+            btnStart.textContent = t('btnStart');
+            btnSettings.textContent = t('btnSettings');
+            document.querySelector('#settings-modal h2').textContent = t('settingsTitle');
+            document.getElementById('lang-label').textContent = t('langLabel');
+            document.getElementById('vol-label').textContent = t('volLabel');
+            btnModalClose.textContent = t('btnClose');
+            document.getElementById('victory-title').textContent = t('victoryTitle');
+            document.getElementById('victory-text').textContent = t('victoryText');
+            btnRestart.textContent = t('btnRestart');
+        }
+
+        function showMenu() {
+            currentState = GameState.MENU;
+            menuDiv.classList.remove('hidden');
+            canvas.classList.remove('visible');
+            hudDiv.classList.remove('visible');
+            victoryOverlay.classList.remove('visible');
+            settingsModal.classList.remove('visible');
+            updateUITexts();
+        }
+
+        function startGame() {
+            initAudio();
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            menuDiv.classList.add('hidden');
+            canvas.classList.add('visible');
+            hudDiv.classList.remove('visible');
+            victoryOverlay.classList.remove('visible');
+            walkProgress = 0;
+            currentState = GameState.WALKING;
+            comboCount = 0;
+            sequenceCompleteCount = 0;
+            currentSequence = 0;
+            activeNotes = [];
+            notesSpawned = [];
+            sequenceState = 'waiting';
+            updateSequenceHUD();
+        }
+
+        function restartGame() {
+            victoryOverlay.classList.remove('visible');
+            startGame();
+        }
+
+        // ============ EVENTOS ============
+        btnStart.addEventListener('click', startGame);
+
+        btnSettings.addEventListener('click', () => {
+            settingsModal.classList.add('visible');
+        });
+
+        btnModalClose.addEventListener('click', () => {
+            settingsModal.classList.remove('visible');
+        });
+
+        btnRestart.addEventListener('click', restartGame);
+
+        langSelect.addEventListener('change', (e) => {
+            config.language = e.target.value;
+            updateUITexts();
+        });
+
+        volSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            volValue.textContent = val + '%';
+            setVolume(val / 100);
+        });
+
+        // Teclado (espaço para acertar notas)
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && currentState === GameState.COMBAT) {
+                e.preventDefault();
+                handlePlayerInput();
+            }
+            if (e.code === 'Enter' && currentState === GameState.MENU) {
+                startGame();
+            }
+        });
+
+        // Toque/clique na tela durante o combate
+        canvas.addEventListener('click', (e) => {
+            if (currentState === GameState.COMBAT) {
+                handlePlayerInput();
+            }
+        });
+
+        // Fecha modal ao clicar fora
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.classList.remove('visible');
+            }
+        });
+
+        // Inicialização
+        updateUITexts();
+        showMenu();
+        lastTime = performance.now() / 1000;
+        animationId = requestAnimationFrame(gameLoop);
+    })();
+</script>
+</body>
+</html>
