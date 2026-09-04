@@ -638,4 +638,1004 @@
             upgrade_title: '⬆ Evolução!',
             upgrade_choose: 'Escolha um upgrade:',
             amp: 'Amplificador',
-            amp_desc: '+1 de dan
+            amp_desc: '+1 de dano por acerto perfeito',
+            amp2: 'Amplificador 2',
+            amp2_desc: '+2 de dano por acerto perfeito',
+            sheet: 'Partitura',
+            sheet_desc: 'Mostra os ritmos antecipadamente',
+            baton: 'Batuta',
+            baton_desc: 'Stuna o inimigo a cada 2 rounds',
+            metronome: 'Metrônomo',
+            metronome_desc: 'Ajuste o BPM (60-90)',
+            rubber: 'Borracha',
+            rubber_desc: 'Apaga 1 round por combate',
+            // gameover
+            gameover: '💀 Game Over',
+            fallen: 'O herói caiu...',
+            victory: '🏆 Vitória!',
+            boss_defeated: 'Saulo Barrento foi derrotado!',
+            unlock: '🎉 Personagem desbloqueado: Tadeuzinho (trompa)',
+            // mapa
+            map_title: '🗺️ Mapa do Castelo',
+            floor: '1º Andar',
+            room: 'Sala',
+            proceed: '⚔️ Avançar',
+            // configurações
+            music: '🔊 Música',
+            sfx: '🔊 Efeitos',
+            language: '🌐 Idioma',
+        },
+        en: {
+            title: '🏰 Musical Castle',
+            start: '▶ Start',
+            config: '⚙ Settings',
+            score: '🏆 Score',
+            back: '🔙 Back',
+            confirm: '✅ Confirm',
+            skip: 'Skip (no upgrade)',
+            retry: '🔄 Retry',
+            menu: '🏠 Menu',
+            continue: '▶ Continue',
+            quit: '🚪 Quit game',
+            pause: '⏸ Pause',
+            clebinho: 'Clebinho',
+            jorginho: 'Jorginho',
+            robertinha: 'Robertinha',
+            aninha: 'Aninha',
+            tadeuzinho: 'Tadeuzinho',
+            lute: 'Lute',
+            flute: 'Flute',
+            trumpet: 'Trumpet',
+            violin: 'Violin',
+            horn: 'Horn',
+            enemy: 'Enemy',
+            boss: 'Boss',
+            round: 'Round',
+            hits: 'Hits',
+            health: 'Health',
+            upgrade_title: '⬆ Level Up!',
+            upgrade_choose: 'Choose an upgrade:',
+            amp: 'Amplifier',
+            amp_desc: '+1 damage per perfect hit',
+            amp2: 'Amplifier 2',
+            amp2_desc: '+2 damage per perfect hit',
+            sheet: 'Sheet Music',
+            sheet_desc: 'Shows rhythms in advance',
+            baton: 'Baton',
+            baton_desc: 'Stuns enemy every 2 rounds',
+            metronome: 'Metronome',
+            metronome_desc: 'Adjust BPM (60-90)',
+            rubber: 'Eraser',
+            rubber_desc: 'Erases 1 round per fight',
+            gameover: '💀 Game Over',
+            fallen: 'The hero has fallen...',
+            victory: '🏆 Victory!',
+            boss_defeated: 'Saulo Barrento defeated!',
+            unlock: '🎉 Character unlocked: Tadeuzinho (horn)',
+            map_title: '🗺️ Castle Map',
+            floor: '1st Floor',
+            room: 'Room',
+            proceed: '⚔️ Advance',
+            music: '🔊 Music',
+            sfx: '🔊 SFX',
+            language: '🌐 Language',
+        },
+        es: {
+            title: '🏰 Castillo Musical',
+            start: '▶ Iniciar',
+            config: '⚙ Configuración',
+            score: '🏆 Puntuación',
+            back: '🔙 Volver',
+            confirm: '✅ Confirmar',
+            skip: 'Saltar (sin mejora)',
+            retry: '🔄 Reintentar',
+            menu: '🏠 Menú',
+            continue: '▶ Continuar',
+            quit: '🚪 Salir del juego',
+            pause: '⏸ Pausa',
+            clebinho: 'Clébinho',
+            jorginho: 'Jorginho',
+            robertinha: 'Robertinha',
+            aninha: 'Aninha',
+            tadeuzinho: 'Tadeuzinho',
+            lute: 'Laúd',
+            flute: 'Flauta',
+            trumpet: 'Trompeta',
+            violin: 'Violín',
+            horn: 'Trompa',
+            enemy: 'Enemigo',
+            boss: 'Jefe',
+            round: 'Ronda',
+            hits: 'Aciertos',
+            health: 'Vida',
+            upgrade_title: '⬆ ¡Evolución!',
+            upgrade_choose: 'Elige una mejora:',
+            amp: 'Amplificador',
+            amp_desc: '+1 de daño por acierto perfecto',
+            amp2: 'Amplificador 2',
+            amp2_desc: '+2 de daño por acierto perfecto',
+            sheet: 'Partitura',
+            sheet_desc: 'Muestra los ritmos con antelación',
+            baton: 'Batuta',
+            baton_desc: 'Aturde al enemigo cada 2 rondas',
+            metronome: 'Metrónomo',
+            metronome_desc: 'Ajusta el BPM (60-90)',
+            rubber: 'Goma',
+            rubber_desc: 'Borra 1 ronda por combate',
+            gameover: '💀 Game Over',
+            fallen: '¡El héroe ha caído!',
+            victory: '🏆 ¡Victoria!',
+            boss_defeated: '¡Saulo Barrento derrotado!',
+            unlock: '🎉 Personaje desbloqueado: Tadeuzinho (trompa)',
+            map_title: '🗺️ Mapa del Castillo',
+            floor: '1er Piso',
+            room: 'Sala',
+            proceed: '⚔️ Avanzar',
+            music: '🔊 Música',
+            sfx: '🔊 Efectos',
+            language: '🌐 Idioma',
+        }
+    };
+
+    // =====================================================================
+    //  ESTADO GLOBAL
+    // =====================================================================
+    let currentLang = 'pt';
+    let gameState = {
+        screen: 'menu', // menu, config, score, charSelect, map, combat, upgrade, gameOver, victory
+        selectedChar: null, // índice 0-3
+        // progresso
+        currentRoom: 0,
+        totalRooms: 15, // 10-20, escolhi 15
+        enemyIndex: 0, // quantos inimigos já derrotados
+        enemiesDefeated: 0,
+        playerHP: 6,
+        maxHP: 6,
+        xp: 0,
+        level: 1,
+        // upgrades escolhidos (objeto)
+        upgrades: {
+            amplifier: false,
+            amplifier2: false,
+            sheet: false,
+            baton: false,
+            metronome: false,
+            metronomeBPM: 60,
+            rubber: false,
+            rubberUsed: false,
+        },
+        // combate
+        combatRound: 0,
+        combatPatterns: [], // lista de rounds
+        currentPattern: null, // array de notas (tempos)
+        noteIndex: 0,
+        notesHit: 0,
+        totalNotesInRound: 0,
+        perfectHits: 0,
+        enemyHP: 0,
+        maxEnemyHP: 0,
+        enemyType: '', // 'goblin', 'ghost', 'zombie', 'mummy', 'boss'
+        isEnemyTurn: false,
+        isBlocking: false,
+        blockWindow: false,
+        countdownActive: false,
+        // bônus
+        stunCounter: 0,
+        stunActive: false,
+        // personagem extra
+        unlockedTadeuzinho: false,
+        // placar
+        highScore: 0,
+        // personagens escolhidos
+        characters: [
+            { id: 'clebinho', nameKey: 'clebinho', instrumentKey: 'lute', color: '#b33a3a', hat: 'pena', avatar: '🧙', soundFreq: 220 },
+            { id: 'jorginho', nameKey: 'jorginho', instrumentKey: 'flute', color: '#3a8a3a', hat: 'robin', avatar: '🧝', soundFreq: 330 },
+            { id: 'robertinha', nameKey: 'robertinha', instrumentKey: 'trumpet', color: '#3a6ab3', hat: 'cartola', avatar: '🧛', soundFreq: 440 },
+            { id: 'aninha', nameKey: 'aninha', instrumentKey: 'violin', color: '#8a3a8a', hat: 'veu', avatar: '🧚', soundFreq: 554 },
+            { id: 'tadeuzinho', nameKey: 'tadeuzinho', instrumentKey: 'horn', color: '#d4d4d4', hat: 'trompa', avatar: '🧔', soundFreq: 660, locked: true },
+        ],
+        // inimigos
+        enemies: [],
+        // mapa
+        mapData: [],
+        // pausa
+        paused: false,
+        // áudio
+        audioCtx: null,
+        musicGain: null,
+        sfxGain: null,
+    };
+
+    // =====================================================================
+    //  FUNÇÕES DE ÁUDIO
+    // =====================================================================
+    function initAudio() {
+        if (!gameState.audioCtx) {
+            gameState.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            gameState.musicGain = gameState.audioCtx.createGain();
+            gameState.musicGain.gain.value = parseFloat(document.getElementById('musicVol').value) / 100;
+            gameState.musicGain.connect(gameState.audioCtx.destination);
+            gameState.sfxGain = gameState.audioCtx.createGain();
+            gameState.sfxGain.gain.value = parseFloat(document.getElementById('sfxVol').value) / 100;
+            gameState.sfxGain.connect(gameState.audioCtx.destination);
+        }
+    }
+
+    function playNote(freq, duration = 0.15, volume = 0.3) {
+        try {
+            const ctx = gameState.audioCtx;
+            if (!ctx) return;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(volume, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(gameState.sfxGain);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + duration);
+        } catch(e) {}
+    }
+
+    function playHitSound() {
+        const char = gameState.characters[gameState.selectedChar];
+        playNote(char ? char.soundFreq : 440, 0.1, 0.4);
+    }
+
+    function playErrorSound() {
+        playNote(200, 0.2, 0.3);
+    }
+
+    function playBlockSound() {
+        playNote(600, 0.08, 0.2);
+    }
+
+    function playDamageSound() {
+        playNote(150, 0.3, 0.5);
+    }
+
+    // =====================================================================
+    //  FUNÇÕES DE TRADUÇÃO
+    // =====================================================================
+    function t(key) {
+        return LANG[currentLang][key] || key;
+    }
+
+    function updateAllTexts() {
+        // Atualiza textos estáticos com base no idioma
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            el.textContent = t(el.dataset.i18n);
+        });
+        // Títulos dinâmicos
+        document.getElementById('menuScreen').querySelector('h1').textContent = t('title');
+        document.getElementById('btnStart').textContent = t('start');
+        document.getElementById('btnConfigMenu').textContent = t('config');
+        document.getElementById('btnScore').textContent = t('score');
+        document.getElementById('btnConfigBack').textContent = t('back');
+        document.getElementById('btnScoreBack').textContent = t('back');
+        document.getElementById('btnCharBack').textContent = t('back');
+        document.getElementById('btnConfirmChar').textContent = t('confirm');
+        document.getElementById('btnMapProceed').textContent = t('proceed');
+        document.getElementById('btnPause').textContent = t('pause');
+        document.getElementById('pauseContinue').textContent = t('continue');
+        document.getElementById('pauseConfig').textContent = t('config');
+        document.getElementById('pauseQuit').textContent = t('quit');
+        document.getElementById('btnRetry').textContent = t('retry');
+        document.getElementById('btnGoMenu').textContent = t('menu');
+        document.getElementById('btnVictoryMenu').textContent = t('menu');
+        document.getElementById('btnUpgradeSkip').textContent = t('skip');
+        // Config
+        document.querySelector('#configScreen h2').textContent = t('config');
+        document.querySelector('.config-row span').textContent = t('music');
+        document.querySelectorAll('.config-row span')[1].textContent = t('sfx');
+        document.querySelectorAll('.config-row span')[2].textContent = t('language');
+        // Placar
+        document.querySelector('#scoreScreen h2').textContent = t('score');
+        // Seleção
+        document.querySelector('#charSelect h2').textContent = '🎭 ' + t('choose_char') || '🎭 Escolha seu Bardo';
+        // Mapa
+        document.querySelector('#mapScreen h2').textContent = t('map_title');
+        document.getElementById('mapFloorLabel').textContent = t('floor');
+        // Upgrade
+        document.querySelector('#upgradeScreen h2').textContent = t('upgrade_title');
+        document.querySelector('#upgradeScreen p').textContent = t('upgrade_choose');
+        // GameOver
+        document.querySelector('#gameOverScreen h2').textContent = t('gameover');
+        document.querySelector('#gameOverScreen p').textContent = t('fallen');
+        // Vitória
+        document.querySelector('#victoryScreen h2').textContent = t('victory');
+        document.querySelector('#victoryScreen p').textContent = t('boss_defeated');
+        document.querySelector('#victoryScreen p:nth-of-type(2)').textContent = t('unlock');
+        // Pausa
+        document.querySelector('#pauseOverlay h2').textContent = '⏸ ' + t('pause');
+        // Personagens na seleção (recriar)
+        renderCharSelect();
+        // Mapa (recriar)
+        renderMap();
+        // Combate (atualiza labels)
+        updateCombatUI();
+    }
+
+    // =====================================================================
+    //  GERENCIAMENTO DE TELAS
+    // =====================================================================
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        gameState.screen = id.replace('Screen','');
+        // Fechar pausa se aberta
+        document.getElementById('pauseOverlay').classList.remove('active');
+    }
+
+    // =====================================================================
+    //  INIMIGOS E PADRÕES RÍTMICOS
+    // =====================================================================
+    function generateEnemyList() {
+        const types = ['goblin', 'ghost', 'zombie', 'mummy'];
+        const list = [];
+        const total = gameState.totalRooms;
+        for (let i = 0; i < total; i++) {
+            let type = types[i % types.length];
+            let hp = 3 + Math.floor(i / 3);
+            if (hp > 5) hp = 5;
+            let isBoss = (i === total - 1);
+            if (isBoss) {
+                type = 'boss';
+                hp = 8;
+            }
+            // Padrões rítmicos
+            let patterns = [];
+            const maxPatterns = 3 + Math.floor(i / 2);
+            let options = [1, 2];
+            if (i >= 5) options.push(3);
+            if (i >= 8) options.push(4);
+            for (let p = 0; p < maxPatterns; p++) {
+                const len = options[Math.floor(Math.random() * options.length)];
+                patterns.push(len);
+            }
+            // Boss tem padrões mais longos e usa todas opções
+            if (isBoss) {
+                patterns = [];
+                for (let p = 0; p < 5; p++) {
+                    const len = [1,2,3,4][Math.floor(Math.random() * 4)];
+                    patterns.push(len);
+                }
+                // nega buffs (marcador)
+            }
+            list.push({
+                type,
+                hp,
+                maxHp: hp,
+                patterns,
+                isBoss,
+                level: i + 1,
+                name: isBoss ? 'Saulo Barrento' : `${type.charAt(0).toUpperCase()+type.slice(1)}`,
+                damage: i < 5 ? 1 : (i < 10 ? 2 : 3)
+            });
+        }
+        return list;
+    }
+
+    // =====================================================================
+    //  MAPA
+    // =====================================================================
+    function generateMap() {
+        const total = gameState.totalRooms;
+        const cols = 5;
+        const rows = Math.ceil(total / cols);
+        const grid = [];
+        let idx = 0;
+        for (let r = 0; r < rows; r++) {
+            const row = [];
+            for (let c = 0; c < cols; c++) {
+                if (idx < total) {
+                    row.push({
+                        index: idx,
+                        row: r,
+                        col: c,
+                        visited: false,
+                        available: false,
+                        isBoss: (idx === total - 1),
+                        enemy: gameState.enemies[idx]
+                    });
+                    idx++;
+                } else {
+                    row.push(null);
+                }
+            }
+            grid.push(row);
+        }
+        // Conectividade: sala 0 visitada, disponíveis as adjacentes (direita, baixo)
+        if (grid.length > 0 && grid[0].length > 0) {
+            grid[0][0].visited = true;
+            if (grid[0][1]) grid[0][1].available = true;
+            if (grid[1] && grid[1][0]) grid[1][0].available = true;
+        }
+        return grid;
+    }
+
+    function renderMap() {
+        const grid = gameState.mapData;
+        const container = document.getElementById('mapGrid');
+        container.innerHTML = '';
+        for (let r = 0; r < grid.length; r++) {
+            for (let c = 0; c < grid[r].length; c++) {
+                const node = grid[r][c];
+                const div = document.createElement('div');
+                div.className = 'map-node';
+                if (!node) {
+                    div.style.visibility = 'hidden';
+                } else {
+                    div.textContent = node.index + 1;
+                    if (node.visited) div.classList.add('visited');
+                    if (node.available) div.classList.add('available');
+                    if (node.isBoss) div.classList.add('boss');
+                    if (node.index === gameState.currentRoom) div.classList.add('current');
+                    // click para navegar se disponível
+                    if (node.available && !node.visited) {
+                        div.style.cursor = 'pointer';
+                        div.addEventListener('click', () => {
+                            gameState.currentRoom = node.index;
+                            renderMap();
+                            updateMapUI();
+                        });
+                    }
+                }
+                container.appendChild(div);
+            }
+        }
+        updateMapUI();
+    }
+
+    function updateMapUI() {
+        const room = gameState.currentRoom;
+        const total = gameState.totalRooms;
+        document.getElementById('mapRoomLabel').textContent = `${t('room')} ${room+1}/${total}`;
+        // Botão avançar: só se a sala atual for visitada e tiver inimigo não derrotado?
+        const node = getNodeByIndex(room);
+        if (node && node.visited) {
+            document.getElementById('btnMapProceed').style.display = 'inline-block';
+        } else {
+            document.getElementById('btnMapProceed').style.display = 'none';
+        }
+        // Verifica se o inimigo da sala atual já foi derrotado
+        if (node && node.enemy && node.enemy.hp <= 0) {
+            // já derrotado, não pode avançar? Talvez possa ir para sala adjacente
+            // Mas deixamos o jogador escolher sala adjacente via clique.
+        }
+    }
+
+    function getNodeByIndex(idx) {
+        for (let r of gameState.mapData) {
+            for (let c of r) {
+                if (c && c.index === idx) return c;
+            }
+        }
+        return null;
+    }
+
+    function getAdjacentNodes(idx) {
+        const node = getNodeByIndex(idx);
+        if (!node) return [];
+        const { row, col } = node;
+        const adj = [];
+        const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+        for (let d of dirs) {
+            const nr = row + d[0];
+            const nc = col + d[1];
+            if (nr >= 0 && nr < gameState.mapData.length && nc >= 0 && nc < gameState.mapData[0].length) {
+                const n = gameState.mapData[nr][nc];
+                if (n) adj.push(n);
+            }
+        }
+        return adj;
+    }
+
+    // =====================================================================
+    //  SELEÇÃO DE PERSONAGEM
+    // =====================================================================
+    function renderCharSelect() {
+        const grid = document.getElementById('charGrid');
+        grid.innerHTML = '';
+        gameState.characters.forEach((char, idx) => {
+            const card = document.createElement('div');
+            card.className = 'char-card';
+            if (char.locked && !gameState.unlockedTadeuzinho && idx === 4) {
+                card.style.opacity = '0.5';
+                card.style.cursor = 'not-allowed';
+                card.innerHTML = `<div class="avatar">🔒</div><div class="name">???</div><div class="instrument">Bloqueado</div>`;
+            } else {
+                const name = t(char.nameKey);
+                const instr = t(char.instrumentKey);
+                card.innerHTML = `
+                    <div class="avatar" style="background:${char.color}40; border:2px solid ${char.color};">${char.avatar}</div>
+                    <div class="name">${name}</div>
+                    <div class="instrument">🎵 ${instr}</div>
+                `;
+                card.addEventListener('click', () => {
+                    if (char.locked && idx === 4 && !gameState.unlockedTadeuzinho) return;
+                    document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    gameState.selectedChar = idx;
+                    document.getElementById('btnConfirmChar').disabled = false;
+                    // tocar som do instrumento
+                    initAudio();
+                    playNote(char.soundFreq, 0.2, 0.5);
+                });
+            }
+            grid.appendChild(card);
+        });
+        // Se já houver seleção, marcar
+        if (gameState.selectedChar !== null && gameState.selectedChar < gameState.characters.length) {
+            const cards = document.querySelectorAll('.char-card');
+            if (cards[gameState.selectedChar]) cards[gameState.selectedChar].classList.add('selected');
+        }
+    }
+
+    // =====================================================================
+    //  COMBATE - RITMO
+    // =====================================================================
+    let rhythmAnimationId = null;
+    let rhythmNotes = []; // objetos com {x, y, radius, hit, time}
+    let hitZoneY = 90; // no canvas de 120px
+    let noteSpeed = 80; // pixels por segundo (ajustável)
+    let beatInterval = 0; // em ms
+    let lastNoteTime = 0;
+    let combateAtivo = false;
+    let roundComplete = false;
+    let enemyDefeated = false;
+    let blockTimeout = null;
+    let blockSuccess = false;
+    let countdownInterval = null;
+
+    function startCombat() {
+        // Preparar inimigo atual
+        const enemy = getCurrentEnemy();
+        if (!enemy) return;
+        gameState.enemyHP = enemy.hp;
+        gameState.maxEnemyHP = enemy.maxHp;
+        gameState.enemyType = enemy.type;
+        gameState.combatRound = 0;
+        gameState.notesHit = 0;
+        gameState.perfectHits = 0;
+        enemyDefeated = false;
+        roundComplete = false;
+        combateAtivo = true;
+        gameState.isEnemyTurn = false;
+        gameState.blockWindow = false;
+        gameState.stunActive = false;
+        gameState.stunCounter = 0;
+        gameState.upgrades.rubberUsed = false;
+
+        // Atualiza UI
+        document.getElementById('enemyName').textContent = enemy.isBoss ? t('boss') : t('enemy');
+        document.getElementById('enemyLevel').textContent = enemy.level;
+        document.getElementById('roundDisplay').textContent = `${t('round')} 1`;
+        document.getElementById('comboDisplay').textContent = `${t('hits')}: 0`;
+        updateHearts();
+        drawEnemy();
+
+        // Mostrar countdown
+        showCountdown(3, () => {
+            // Iniciar primeiro round
+            startRound();
+        });
+    }
+
+    function getCurrentEnemy() {
+        const node = getNodeByIndex(gameState.currentRoom);
+        if (node && node.enemy) return node.enemy;
+        return null;
+    }
+
+    function showCountdown(seconds, callback) {
+        const el = document.getElementById('countdown');
+        el.style.display = 'block';
+        let count = seconds;
+        el.textContent = count;
+        gameState.countdownActive = true;
+        if (countdownInterval) clearInterval(countdownInterval);
+        countdownInterval = setInterval(() => {
+            count--;
+            if (count <= 0) {
+                clearInterval(countdownInterval);
+                el.style.display = 'none';
+                gameState.countdownActive = false;
+                if (callback) callback();
+            } else {
+                el.textContent = count;
+            }
+        }, 1000);
+    }
+
+    function startRound() {
+        if (enemyDefeated) return;
+        const enemy = getCurrentEnemy();
+        if (!enemy) return;
+        const patterns = enemy.patterns;
+        if (gameState.combatRound >= patterns.length) {
+            // Inimigo derrotado?
+            enemy.hp = 0;
+            enemyDefeated = true;
+            combatVictory();
+            return;
+        }
+        const patternLen = patterns[gameState.combatRound];
+        // Gerar notas para este round
+        const notes = generateNotesForPattern(patternLen);
+        gameState.currentPattern = notes;
+        gameState.noteIndex = 0;
+        gameState.totalNotesInRound = notes.length;
+        gameState.notesHit = 0;
+        roundComplete = false;
+        // Atualiza UI
+        document.getElementById('roundDisplay').textContent = `${t('round')} ${gameState.combatRound+1}`;
+        document.getElementById('comboDisplay').textContent = `${t('hits')}: 0`;
+        // Se tiver upgrade partitura, mostrar padrão
+        if (gameState.upgrades.sheet) {
+            // Mostrar no canto (implementação simples: texto)
+            // podemos mostrar no canvas ou em um elemento
+            showSheetHint(patternLen);
+        }
+        // Se tiver borracha e não usada, apagar um round?
+        if (gameState.upgrades.rubber && !gameState.upgrades.rubberUsed && gameState.combatRound === 0) {
+            // Apaga o primeiro round? Vamos permitir usar antes do round
+            // Vamos simular: o jogador pode clicar em um botão para usar? Para simplificar, aplicamos automaticamente no primeiro round?
+            // Melhor: durante o combate, antes do round, mostrar opção? Não, a descrição diz "apaga uma das sequências rítmicas por combate antes dele começar"
+            // Vamos fazer: se o upgrade rubber estiver ativo, ao iniciar o combate, o primeiro round é pulado automaticamente (sem dano)
+            // Mas ele disse "apaga uma das sequências rítmicas por combate antes dele começar, fazendo com que a sequência apagada cause o dano automaticamente"
+            // Então, se usarmos, o round atual é resolvido automaticamente com dano perfeito?
+            // Vamos implementar: ao iniciar o round, se rubber disponível e não usado, usamos automaticamente no primeiro round.
+            if (!gameState.upgrades.rubberUsed) {
+                gameState.upgrades.rubberUsed = true;
+                // Resolve o round atual com dano máximo (2 de dano) sem precisar tocar
+                applyDamageToEnemy(2, true);
+                // Avança para o próximo round
+                gameState.combatRound++;
+                startRound();
+                return;
+            }
+        }
+        // Se stun ativo, pular round? Não, stun faz o inimigo não atacar.
+        // Iniciar animação das notas
+        startRhythmAnimation(notes);
+    }
+
+    function generateNotesForPattern(patternLen) {
+        // Retorna array de tempos (em segundos) relativos ao início do round
+        // BPM = 60 => 1 batida por segundo
+        const bpm = gameState.upgrades.metronome ? gameState.upgrades.metronomeBPM : 60;
+        const beatDuration = 60 / bpm; // segundos por batida
+        const notes = [];
+        let time = 0;
+        for (let i = 0; i < patternLen; i++) {
+            notes.push(time);
+            // Intervalo entre notas: para cliques rápidos, usamos metade da batida (colcheia)
+            // Se for o último, não adiciona intervalo depois
+            if (i < patternLen - 1) {
+                // intervalo rápido: 0.5 * beatDuration (colcheia)
+                time += beatDuration * 0.5;
+            }
+        }
+        // Agora ajustamos para que o round dure um certo tempo, mas tanto faz.
+        return notes;
+    }
+
+    function startRhythmAnimation(notes) {
+        if (rhythmAnimationId) cancelAnimationFrame(rhythmAnimationId);
+        const canvas = document.getElementById('rhythmCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const startTime = performance.now() / 1000;
+        // Ajustar velocidade com base no BPM
+        const bpm = gameState.upgrades.metronome ? gameState.upgrades.metronomeBPM : 60;
+        noteSpeed = (bpm / 60) * 60; // pixels por segundo (60 é base)
+
+        let lastTimestamp = startTime;
+        let noteIndex = 0;
+        let notesData = notes.map(t => ({
+            time: t,
+            hit: false,
+            y: 0, // será calculado
+            x: width / 2,
+            radius: 15,
+            missed: false
+        }));
+
+        function animate() {
+            const now = performance.now() / 1000;
+            const delta = now - lastTimestamp;
+            lastTimestamp = now;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Desenhar zona de acerto
+            ctx.beginPath();
+            ctx.strokeStyle = '#d4a373';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([8,8]);
+            ctx.beginPath();
+            ctx.moveTo(0, hitZoneY);
+            ctx.lineTo(width, hitZoneY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Atualizar posição das notas
+            const timeSinceStart = now - startTime;
+            let allMissed = true;
+            for (let i = 0; i < notesData.length; i++) {
+                const note = notesData[i];
+                if (note.hit) continue;
+                const noteTime = note.time;
+                const elapsed = timeSinceStart - noteTime;
+                // A nota desce de y = -20 até hitZoneY
+                const totalDist = hitZoneY + 20; // de -20 até hitZoneY
+                const progress = elapsed / (hitZoneY + 20 / noteSpeed); // tempo estimado para chegar
+                const y = -20 + progress * (hitZoneY + 20);
+                note.y = y;
+                // Verificar se passou da zona
+                if (y > hitZoneY + 30) {
+                    note.missed = true;
+                    // Erro: se não foi hit, conta como erro
+                    if (!note.hit) {
+                        // Errou a nota
+                        note.hit = true; // marca como processado
+                        // Reduz acertos
+                        gameState.notesHit = Math.max(0, gameState.notesHit - 1);
+                        document.getElementById('comboDisplay').textContent = `${t('hits')}: ${gameState.notesHit}`;
+                        playErrorSound();
+                    }
+                    continue;
+                }
+                if (y < hitZoneY + 30) {
+                    allMissed = false;
+                }
+                // Desenhar nota
+                const color = note.hit ? '#4a8a4a' : '#d4a373';
+                ctx.beginPath();
+                ctx.arc(note.x, y, note.radius, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Se estiver na zona, brilho
+                if (y > hitZoneY - 15 && y < hitZoneY + 15) {
+                    ctx.shadowColor = '#f0d080';
+                    ctx.shadowBlur = 20;
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            // Verificar se todas as notas foram hit ou miss
+            const allProcessed = notesData.every(n => n.hit === true);
+            if (allProcessed && !roundComplete) {
+                // Fim do round
+                roundComplete = true;
+                // Calcular dano
+                const total = notesData.length;
+                const hitCount = notesData.filter(n => n.hit && !n.missed).length;
+                const perfect = (hitCount === total);
+                let damage = 0;
+                if (perfect) {
+                    damage = 2 + (gameState.upgrades.amplifier ? 1 : 0) + (gameState.upgrades.amplifier2 ? 2 : 0);
+                } else if (hitCount >= total - 1) {
+                    damage = 1;
+                } else {
+                    damage = 0;
+                }
+                // Aplica dano ao inimigo
+                if (damage > 0) {
+                    applyDamageToEnemy(damage, perfect);
+                }
+                // Avança round
+                gameState.combatRound++;
+                // Verifica se inimigo morreu
+                const enemy = getCurrentEnemy();
+                if (enemy && enemy.hp <= 0) {
+                    enemyDefeated = true;
+                    combatVictory();
+                    return;
+                } else {
+                    // Vez do inimigo atacar
+                    enemyTurn();
+                }
+                return;
+            }
+
+            rhythmAnimationId = requestAnimationFrame(animate);
+        }
+
+        rhythmAnimationId = requestAnimationFrame(animate);
+
+        // Evento de clique para tocar
+        const hitBtn = document.getElementById('hitButton');
+        const handler = (e) => {
+            e.preventDefault();
+            if (roundComplete || enemyDefeated || gameState.isEnemyTurn || gameState.countdownActive) return;
+            if (gameState.paused) return;
+            // Verificar se alguma nota está na zona
+            const now = performance.now() / 1000;
+            const timeSinceStart = now - startTime;
+            let hitAny = false;
+            for (let i = 0; i < notesData.length; i++) {
+                const note = notesData[i];
+                if (note.hit) continue;
+                const noteTime = note.time;
+                const elapsed = timeSinceStart - noteTime;
+                const y = -20 + (elapsed / (hitZoneY + 20 / noteSpeed)) * (hitZoneY + 20);
+                if (y >= hitZoneY - 20 && y <= hitZoneY + 20) {
+                    // Acertou!
+                    note.hit = true;
+                    note.y = hitZoneY;
+                    gameState.notesHit++;
+                    document.getElementById('comboDisplay').textContent = `${t('hits')}: ${gameState.notesHit}`;
+                    playHitSound();
+                    hitAny = true;
+                    break;
+                }
+            }
+            if (!hitAny) {
+                // Tocar fora do ritmo: pode ser erro? Ou ignorar? Vamos considerar erro leve?
+                playErrorSound();
+            }
+        };
+        hitBtn.addEventListener('click', handler);
+        // Armazenar handler para remover depois
+        hitBtn._rhythmHandler = handler;
+    }
+
+    function applyDamageToEnemy(damage, perfect) {
+        const enemy = getCurrentEnemy();
+        if (!enemy) return;
+        enemy.hp = Math.max(0, enemy.hp - damage);
+        gameState.enemyHP = enemy.hp;
+        updateHearts();
+        drawEnemy();
+        // Se HP zerar, enemyDefeated será tratado depois
+        if (enemy.hp <= 0) {
+            enemyDefeated = true;
+        }
+    }
+
+    function enemyTurn() {
+        if (enemyDefeated) return;
+        gameState.isEnemyTurn = true;
+        const enemy = getCurrentEnemy();
+        const damage = enemy.damage || 1;
+        // Mostrar animação de ataque (desacelerar)
+        // Vamos fazer uma pausa de 1 segundo e depois o jogador pode aparar
+        // Simples: mostrar um aviso e contar tempo para clique
+        document.getElementById('comboDisplay').textContent = '⚠️ Aparar!';
+        // Janela de bloqueio: 0.8s
+        gameState.blockWindow = true;
+        blockSuccess = false;
+        // Tocar som de alerta
+        playNote(300, 0.2, 0.3);
+        if (blockTimeout) clearTimeout(blockTimeout);
+        blockTimeout = setTimeout(() => {
+            gameState.blockWindow = false;
+            if (!blockSuccess) {
+                // Tomou dano
+                gameState.playerHP -= damage;
+                updateHearts();
+                playDamageSound();
+                if (gameState.playerHP <= 0) {
+                    gameOver();
+                    return;
+                }
+            }
+            // Fim do turno inimigo
+            gameState.isEnemyTurn = false;
+            // Se stun ativo, pula ataque do inimigo? Já pulamos acima? Na verdade, se stun ativo, o inimigo não ataca.
+            // Vamos verificar stun antes de chamar enemyTurn()
+            // Avançar para próximo round
+            startRound();
+        }, 800);
+
+        // O jogador pode clicar para aparar durante a janela
+        const blockHandler = () => {
+            if (gameState.blockWindow && !blockSuccess) {
+                blockSuccess = true;
+                playBlockSound();
+                // Desvia do dano
+                gameState.blockWindow = false;
+                clearTimeout(blockTimeout);
+                // Mostra "Aparou!"
+                document.getElementById('comboDisplay').textContent = '🛡️ Aparou!';
+                // Não toma dano
+                // Mas ainda precisa esperar o tempo de ataque? Podemos encerrar o turno imediatamente?
+                // Vamos encerrar após pequeno delay
+                setTimeout(() => {
+                    gameState.isEnemyTurn = false;
+                    startRound();
+                }, 300);
+            }
+        };
+        document.getElementById('hitButton').addEventListener('click', blockHandler);
+        // Guardar para remover depois
+        document.getElementById('hitButton')._blockHandler = blockHandler;
+    }
+
+    function combatVictory() {
+        // Inimigo derrotado
+        const enemy = getCurrentEnemy();
+        // Ganhar XP
+        let xpGain = 1;
+        if (gameState.enemyIndex >= 5) xpGain = 2;
+        if (enemy && enemy.isBoss) xpGain = 5;
+        gameState.xp += xpGain;
+        gameState.enemiesDefeated++;
+        // Atualizar mapa: marcar sala como visitada e derrotada
+        const node = getNodeByIndex(gameState.currentRoom);
+        if (node) {
+            node.visited = true;
+            node.enemy.hp = 0;
+            // Liberar salas adjacentes
+            const adj = getAdjacentNodes(gameState.currentRoom);
+            for (let a of adj) {
+                if (!a.visited && !a.enemy.hp <= 0) {
+                    a.available = true;
+                }
+            }
+        }
+        // Verificar se é boss final
+        if (enemy && enemy.isBoss) {
+            // Vitória!
+            gameState.unlockedTadeuzinho = true;
+            showScreen('victoryScreen');
+            // Salvar progresso
+            saveProgress();
+            return;
+        }
+        // Verificar evolução de nível
+        checkLevelUp();
+        // Voltar ao mapa
+        showScreen('mapScreen');
+        renderMap();
+        // Salvar progresso
+        saveProgress();
+    }
+
+    function checkLevelUp() {
+        const needed = gameState.level * 5;
+        while (gameState.xp >= needed) {
+            gameState.xp -= needed;
+            gameState.level++;
+            // Mostrar tela de upgrade
+            showUpgradeScreen();
+            break; // apenas um upgrade por vez
+        }
+    }
+
+    function showUpgradeScreen() {
+        showScreen('upgradeScreen');
+        const container = document.getElementById('upgradeOptions');
+        container.innerHTML = '';
+        // Definir upgrades disponíveis com base no nível
+        let available = [];
+        if (gameState.level === 2) {
+            available = [
+                { id: 'amplifier', label: t('amp'), desc: t('amp_desc') },
+                { id: 'sheet', label: t('sheet'), desc: t('sheet_desc') },
+                { id: 'baton', label: t('baton'), desc: t('baton_desc') },
+            ];
+        } else if (gameState.level === 3) {
+            available = [
+                { id: 'metronome', label: t('metronome'), desc: t('metronome_desc') },
+                { id: 'amplifier2', label: t('amp2'), desc: t('amp2_desc') },
+                { id: 'rubber', label: t('rubber'), desc: t('rubber_desc') },
+            ];
+        } else {
+            // Níveis mais altos, repetir ou nada
+            available = [
+                { id: 'amplifier2', label: t('amp2'), desc: t('amp2_desc') },
+                { id: 'metronome', label: t('metronome'), desc: t('metronome_desc') },
+                { id: 'rubber', label: t('rubber'), desc: t('rubber_desc') },
+            ];
+        }
+        /
+...
